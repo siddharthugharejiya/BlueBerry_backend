@@ -18,23 +18,20 @@ export const AddProduct = async (req, res) => {
 }
 export const All_product = async (req, res) => {
     try {
-        const { category } = req.query;
-        
-        // Validate category if provided
-        if (category && category !== "All") {
-            const data = await ProductModel.find({ category: category }).lean();
-            if (!data.length) {
-                return res.status(404).json({ 
-                    success: false,
-                    message: "No products found in this category",
-                    data: [] 
-                });
-            }
-            return res.status(200).json({ 
-                success: true,
-                message: "Products filtered successfully",
-                data: data 
-            });
+      const { category } = req.query;
+  let products;
+
+  if (category) {
+    products = await ProductModel.find({ category: category });
+  } else {
+    products = await ProductModel.find();
+  }
+
+  if (products.length === 0) {
+    return res.status(200).json({ data: [] }); // 👈 empty but no error
+  }
+
+  return res.status(200).json({ data: products });
         }
         
         // Get all products
