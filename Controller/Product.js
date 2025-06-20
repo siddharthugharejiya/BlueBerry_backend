@@ -18,22 +18,42 @@ export const AddProduct = async (req, res) => {
 }
 export const All_product = async (req, res) => {
     try {
-        const { category } = req.query
-        // console.log(category)
-        if (category) {
-            const data = await ProductModel.find({ category: category })
-            // console.log(data);
-            return res.send({ message: "Products Filtered", data: data });
+        const { category } = req.query;
+        
+        // Validate category if provided
+        if (category && category !== "All") {
+            const data = await ProductModel.find({ category: category }).lean();
+            if (!data.length) {
+                return res.status(404).json({ 
+                    success: false,
+                    message: "No products found in this category",
+                    data: [] 
+                });
+            }
+            return res.status(200).json({ 
+                success: true,
+                message: "Products filtered successfully",
+                data: data 
+            });
         }
-        else {
-            const data = await ProductModel.find()
-            return res.send({ message: "Products fetched", data: data });
-        }
+        
+        // Get all products
+        const data = await ProductModel.find().lean();
+        return res.status(200).json({ 
+            success: true,
+            message: "All products fetched",
+            data: data 
+        });
+
     } catch (err) {
-        return res.status(500).send({ message: "Something went wrong", error: err });
+        console.error("Product fetch error:", err);
+        return res.status(500).json({ 
+            success: false,
+            message: "Server error occurred",
+            error: err.message 
+        });
     }
 }
-
 export const Del = async (req, res) => {
     try {
         const { id } = req.params
