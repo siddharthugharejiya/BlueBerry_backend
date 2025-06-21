@@ -4,10 +4,10 @@ import jwt from "jsonwebtoken"
 
 export const Signup = async (req, res) => {
    try {
-      const ADMIN_KEY = 12345
+      // const ADMIN_KEY = 12345
       const { username, email, password, role, key } = req.body
 
-      if (ADMIN_KEY != key) {
+      if (process.env.ADMIN_KEY != key) {
          return res.status(400).send("user are not Authorized")
       }
 

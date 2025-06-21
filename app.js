@@ -18,8 +18,9 @@ app.use("/", UserRouter)
 app.use("/", ProductRouter)
 
 
-const PORT = 9595
-app.listen(PORT, () => {
+// const PORT = 9595
+app.listen(process.env.PORT, () => {
+
     console.log("backend is running");
     MainServer()
 });
