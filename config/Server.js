@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import 'dotenv/config'
 export const MainServer = async () => {
     try {
-        await mongoose.connect(process.env.MONGOOSE_URL, {
+        await mongoose.connect("mongodb+srv://multiera95:95@berry.mpespql.mongodb.net/test?retryWrites=true&w=majority&appName=berry", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })

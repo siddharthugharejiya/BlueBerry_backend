@@ -19,7 +19,7 @@ export const All_product = async (req, res) => {
         if (category) {
             products = await ProductModel.find({ category });
         } else {
-            products = await ProductModel.find();
+            products = await ProductModel.find()
         }
 
         if (products.length === 0) {
