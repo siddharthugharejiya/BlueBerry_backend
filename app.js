@@ -11,7 +11,7 @@ const app = express();
 app.use(helmet())
 app.use(express.json())
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://frontend-weld-mu.vercel.app",
 
 }))
 app.use("/", UserRouter)
